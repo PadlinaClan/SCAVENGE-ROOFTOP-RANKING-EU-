@@ -5,17 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCAVENGE ROOFTOP RANKING EU</title>
     <style>
-        body {
-            background-color: black; /* Ustawienie czarnego tła */
-            color: white; /* Ustawienie białego koloru tekstu */
-            font-family: Arial, sans-serif; /* Ustawienie rodziny czcionek */
-            margin: 0; /* Usunięcie domyślnego marginesu */
-            padding: 0; /* Usunięcie domyślnego wewnętrznego marginesu */
-        }
-
-        header {
-            text-align: center; /* Wyśrodkowanie tekstu */
-            padding: 50px 0; /* Dodanie wewnętrznego marginesu na górze i na dole */
+        /* Styl dla gwiazdek */
+        .rating span {
+            cursor: pointer; /* Kursor zmienia się na "pointer" po najechaniu */
         }
     </style>
 </head>
@@ -25,13 +17,41 @@
     </header>
 
     <main>
-        <ol id="ranking-list">
-            <!-- Tutaj będą dodawane elementy listy rankingowej dynamicznie za pomocą JavaScript -->
-        </ol>
+        <div class="player">
+            <span>Sebastian Bach</span>
+            <div class="rating" data-player-id="1">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+        </div>
     </main>
 
     <footer>
         <p>© 2024 SCAVENGE ROOFTOP RANKING EU. Wszelkie prawa zastrzeżone.</p>
     </footer>
+
+    <script>
+        // Funkcja do obsługi głosowania na gracza
+        function voteForPlayer(playerId) {
+            // Sprawdzamy, czy użytkownik oddał już głos
+            if (!localStorage.getItem('votedPlayer' + playerId)) {
+                // Aktualizujemy stan, że użytkownik oddał głos
+                localStorage.setItem('votedPlayer' + playerId, true);
+                // Aktualizujemy wygląd gwiazdek (np. zmieniając kolor)
+                const stars = document.querySelectorAll('[data-player-id="' + playerId + '"] span');
+                stars.forEach(star => star.style.color = 'gold');
+                // Tutaj możesz umieścić kod do zapisania głosu w bazie danych lub innym miejscu
+                // np. wysłanie żądania AJAX do serwera
+                console.log('Oddano głos na gracza o ID ' + playerId);
+            } else {
+                console.log('Już oddano głos na tego gracza.');
+            }
+        }
+
+        // Dodajemy nasłuchiwanie kliknięcia gwiazdek
+        const stars = document.querySelectorAll('.rating span');
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => voteForPlayer(star.parentElement.dataset.playerId));
+        });
+    </script>
 </body>
 </html>
