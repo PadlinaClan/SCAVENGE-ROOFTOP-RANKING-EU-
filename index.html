@@ -15,19 +15,20 @@
 
         header {
             text-align: center;
-            padding: 50px 0;
+            padding: 50px 0 20px; /* Zwiększenie odstępu od nagłówka */
         }
 
         .player {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
+            align-items: center; /* Wyśrodkowanie elementów w pionie */
+            justify-content: flex-start; /* Rozciągnięcie elementów na całej szerokości */
+            padding: 20px 20px 10px; /* Dostosowanie odstępów */
             border-bottom: 1px solid gray;
         }
 
         .player span {
-            margin: 0; 
+            margin: 0; /* Usunięcie domyślnego marginesu dla nazwy gracza */
+            padding-right: 20px; /* Dodatkowy odstęp między nazwą gracza a gwiazdkami */
         }
 
         .rating span {
@@ -38,7 +39,7 @@
         footer {
             text-align: center;
             padding: 20px 0;
-            margin-top: 0; 
+            margin-top: 0; /* Usunięcie domyślnego marginesu z góry */
         }
     </style>
 </head>
@@ -49,7 +50,7 @@
 
     <main>
         <div class="player">
-            <span>Sebastian Bach</span>
+            <span style="margin-right: auto;">Sebastian Bach</span> <!-- Przesunięcie tekstu na lewo -->
             <div class="rating" data-player-id="1">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
