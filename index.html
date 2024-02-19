@@ -15,20 +15,19 @@
 
         header {
             text-align: center;
-            padding: 50px 0 20px; /* Zwiększenie odstępu od nagłówka */
+            padding: 50px 0 20px;
         }
 
         .player {
             display: flex;
-            align-items: center; /* Wyśrodkowanie elementów w pionie */
-            justify-content: flex-start; /* Rozciągnięcie elementów na całej szerokości */
-            padding: 20px 20px 10px; /* Dostosowanie odstępów */
+            justify-content: flex-start;
+            padding: 20px 20px 10px;
             border-bottom: 1px solid gray;
         }
 
         .player span {
-            margin: 0; /* Usunięcie domyślnego marginesu dla nazwy gracza */
-            padding-right: 20px; /* Dodatkowy odstęp między nazwą gracza a gwiazdkami */
+            margin: 0;
+            padding-right: 20px;
         }
 
         .rating span {
@@ -39,18 +38,34 @@
         footer {
             text-align: center;
             padding: 20px 0;
-            margin-top: 0; /* Usunięcie domyślnego marginesu z góry */
+            margin-top: 0;
+        }
+
+        .voting-suggestion {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>SCAVENGE ROOFTOP RANKING EU</h1>
+        <div class="voting-suggestion">
+            My voting suggestion<br>
+            7 stars - one of the best players<br>
+            6 stars - pro<br>
+            5 - good player<br>
+            4 - useful player<br>
+            3 - average player<br>
+            2 - noob<br>
+            1 - worse than a bot
+        </div>
     </header>
 
     <main>
         <div class="player">
-            <span style="margin-right: auto;">Sebastian Bach</span> <!-- Przesunięcie tekstu na lewo -->
+            <span style="margin-right: auto;">Sebastian Bach</span>
             <div class="rating" data-player-id="1">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
