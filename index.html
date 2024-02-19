@@ -65,7 +65,7 @@
 
     <main>
         <div class="player">
-            <span>Sebastian Bach</span> <!-- Usunięcie "margin-right: auto;" -->
+            <span>Sebastian Bach</span> 
             <div class="rating" data-player-id="1">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
@@ -77,14 +77,14 @@
     </footer>
 
     <script>
-        function voteForPlayer(playerId, stars) {
+        function voteForPlayer(playerId, stars, clickedStar) {
             if (!localStorage.getItem('votedPlayer' + playerId)) {
                 localStorage.setItem('votedPlayer' + playerId, true);
-                for (let i = 0; i < stars.length; i++) {
-                    if (i <= stars.indexOf(this)) {
-                        stars[i].style.color = 'gold';
+                stars.forEach((star, index) => {
+                    if (index <= stars.indexOf(clickedStar)) {
+                        star.style.color = 'gold';
                     }
-                }
+                });
                 console.log('Oddano głos na gracza o ID ' + playerId);
             } else {
                 console.log('Już oddano głos na tego gracza.');
@@ -94,7 +94,7 @@
         const stars = document.querySelectorAll('.rating span');
         stars.forEach((star, index) => {
             star.addEventListener('click', function() {
-                voteForPlayer(this.parentElement.dataset.playerId, Array.from(stars));
+                voteForPlayer(this.parentElement.dataset.playerId, Array.from(stars), this);
             });
         });
     </script>
