@@ -70,53 +70,51 @@
 
     <main>
         <div class="player">
-            <span>Sebastian Bach (5 głosów)</span> 
+            <span>Sebastian Bach (5 votes)</span> 
             <div class="rating" data-player-id="1">
-                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                <span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span>
             </div>
         </div>
 
         <div class="player">
-            <span>Monsgeek (3 głosy)</span>
+            <span>Monsgeek (3 votes)</span>
             <div class="rating" data-player-id="2">
-                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                <span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span>
             </div>
         </div>
 
         <div class="player">
-            <span>Timnurleng (2 głosy)</span>
+            <span>Timnurleng (2 votes)</span>
             <div class="rating" data-player-id="3">
-                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                <span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span>
             </div>
         </div>
 
         <div class="player">
-            <span>skankhunt42 (4 głosy)</span>
+            <span>skankhunt42 (4 votes)</span>
             <div class="rating" data-player-id="4">
-                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                <span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span>
             </div>
         </div>
 
         <div class="player">
-            <span>asda (1 głos)</span>
+            <span>asda (1 vote)</span>
             <div class="rating" data-player-id="5">
-                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                <span style="color: gold;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span>
             </div>
         </div>
 
         <div class="player">
-            <span>Prada (6 głosów)</span>
+            <span>Prada (6 votes)</span>
             <div class="rating" data-player-id="6">
-                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                <span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span>
             </div>
         </div>
 
         <div class="player">
-            <span>Ɛ> (2 głosy)</span>
-            <div class="rating" data-player-id
-            <span>Ɛ> (2 głosy)</span>
+            <span>Ɛ> (2 votes)</span>
             <div class="rating" data-player-id="7">
-                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                <span style="color: gold;">&#9733;</span><span style="color: gold;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span><span style="color: gray;">&#9733;</span>
             </div>
         </div>
     </main>
@@ -146,7 +144,7 @@
         const stars = document.querySelectorAll('.rating span');
         stars.forEach((star, index) => {
             star.addEventListener('click', function() {
-                voteForPlayer(this.parentElement.dataset.playerId, Array.from(stars), this);
+                voteForPlayer(this.parentElement.dataset.playerId, stars, this);
             });
         });
     </script>
