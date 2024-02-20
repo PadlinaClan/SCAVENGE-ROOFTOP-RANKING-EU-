@@ -19,43 +19,21 @@
         }
 
         .header-text {
-            animation: changeColor 10s infinite; /* Animacja trwa 10 sekund i powtarza się nieskończoność razy */
+            animation: changeColor 10s infinite;
         }
 
         @keyframes changeColor {
-            0% {
-                color: red;
-            }
-            10% {
-                color: orange;
-            }
-            20% {
-                color: yellow;
-            }
-            30% {
-                color: green;
-            }
-            40% {
-                color: blue;
-            }
-            50% {
-                color: indigo; /* Możesz również użyć 'purple' zamiast 'indigo' */
-            }
-            60% {
-                color: violet; /* Możesz również użyć 'purple' zamiast 'violet' */
-            }
-            70% {
-                color: pink;
-            }
-            80% {
-                color: white;
-            }
-            90% {
-                color: cyan; /* Możesz również użyć 'lightblue' zamiast 'cyan' */
-            }
-            100% {
-                color: red;
-            }
+            0% { color: red; }
+            10% { color: orange; }
+            20% { color: yellow; }
+            30% { color: green; }
+            40% { color: blue; }
+            50% { color: indigo; }
+            60% { color: violet; }
+            70% { color: pink; }
+            80% { color: white; }
+            90% { color: cyan; }
+            100% { color: red; }
         }
 
         .player {
@@ -118,7 +96,7 @@
     <main>
         <div class="player" data-player-id="1">
             <span>Sebastian Bach</span>
-            <div class="rating">
+            <div class="rating" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
@@ -127,7 +105,7 @@
         <!-- Dodany nowy gracz -->
         <div class="player" data-player-id="2">
             <span>John Doe</span>
-            <div class="rating">
+            <div class="rating" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
@@ -172,8 +150,8 @@
         function sortPlayersByAverageRating() {
             const players = document.querySelectorAll('.player');
             const sortedPlayers = Array.from(players).sort((a, b) => {
-                const starsA = Array.from(a.querySelectorAll('.rating span')).filter(star => star.style.color === 'gold').length;
-                const starsB = Array.from(b.querySelectorAll('.rating span')).filter(star => star.style.color === 'gold').length;
+                const starsA = parseInt(a.querySelector('.rating').getAttribute('data-rating'));
+                const starsB = parseInt(b.querySelector('.rating').getAttribute('data-rating'));
                 return starsB - starsA;
             });
             const main = document.querySelector('main');
@@ -189,6 +167,7 @@
                 const clickedStarIndex = index;
                 if (index < 7 && this.parentElement.dataset.playerId === playerId) {
                     voteForPlayer(playerId, stars, clickedStarIndex);
+                    this.parentElement.setAttribute('data-rating', clickedStarIndex + 1);
                 }
             });
         });
@@ -202,6 +181,10 @@
             const voteCountElements = document.querySelectorAll('.vote-count');
             voteCountElements.forEach(voteCountElement => {
                 voteCountElement.textContent = '(0 votes)';
+            });
+            const playerRatings = document.querySelectorAll('.rating');
+            playerRatings.forEach(rating => {
+                rating.setAttribute('data-rating', '0');
             });
             console.log('Wszystkie oddane głosy zostały zresetowane.');
         });
