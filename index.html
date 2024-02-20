@@ -123,12 +123,20 @@
     <script>
         function voteForPlayer(playerId, clickedStarIndex) {
             const previousVote = localStorage.getItem('votedPlayer' + playerId);
-            if (!previousVote) {
+            const stars = document.querySelectorAll(`.player[data-player-id="${playerId}"] .rating span`);
+            if (previousVote !== null) {
+                // Jeśli poprzedni głos już był oddany, anuluj go
+                stars.forEach((star, index) => {
+                    star.style.color = index <= previousVote ? 'gold' : 'gray';
+                });
+            }
+
+            if (previousVote !== clickedStarIndex.toString()) {
                 localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
                 const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
                 localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
 
-                const stars = document.querySelectorAll(`.player[data-player-id="${playerId}"] .rating span`);
+                // Zmiana kolorów gwiazdek
                 stars.forEach((star, index) => {
                     if (index <= clickedStarIndex) {
                         star.style.color = 'gold';
@@ -140,7 +148,7 @@
                 updateVoteCount(playerId);
                 sortPlayersByAverageRating();
             } else {
-                console.log('Już oddano głos na tego gracza.');
+                console.log('Już oddano taki sam głos na tego gracza.');
             }
         }
 
