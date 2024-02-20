@@ -19,7 +19,7 @@
         }
 
         .header-text {
-            animation: changeColor 10s infinite;
+            animation: changeColor 15s infinite;
         }
 
         @keyframes changeColor {
@@ -83,13 +83,14 @@
         <h1 class="header-text">SCAVENGE ROOFTOP RANKING EU</h1>
         <div class="voting-suggestion">
             My voting suggestion:<br>
-            7 stars - one of the best players<br>
-            6 stars - pro<br>
-            5 stars - good player<br>
-            4 stars - useful player<br>
+            <br>
+            7 stars - best <br>
+            6 stars - pro <br>
+            5 stars - very good player<br>
+            4 stars - good player<br>
             3 stars - average player<br>
-            2 stars - noob<br>
-            1 star - worse than a bot
+            2 stars - kinda useful <br>
+            1 star - noob
         </div>
     </header>
 
@@ -104,14 +105,12 @@
 
         <!-- Dodany nowy gracz -->
         <div class="player" data-player-id="2">
-            <span>John Doe</span>
+            <span>[ y ]</span>
             <div class="rating" data-player-id="2" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
-
-        <!-- Reszta kodu -->
 
         <button class="reset-button">Reset Votes</button>
     </main>
@@ -124,7 +123,7 @@
         function voteForPlayer(playerId, clickedStarIndex) {
             const previousVote = localStorage.getItem('votedPlayer' + playerId);
             const stars = document.querySelectorAll(`.player[data-player-id="${playerId}"] .rating span`);
-            const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
+            let voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
 
             if (previousVote !== clickedStarIndex.toString()) {
                 // Zapisanie wartości głosu
@@ -182,6 +181,26 @@
             });
         }
 
+        // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony
+        function restoreVotesAndColors() {
+            const players = document.querySelectorAll('.player');
+            players.forEach(player => {
+                const playerId = player.dataset.playerId;
+                const vote = localStorage.getItem('votedPlayer' + playerId);
+                const stars = player.querySelectorAll('.rating span');
+                if (vote !== null) {
+                    stars.forEach((star, index) => {
+                        if (index < parseInt(vote)) {
+                            star.style.color = 'gold';
+                        } else {
+                            star.style.color = 'gray';
+                        }
+                    });
+                    updateVoteCount(playerId);
+                }
+            });
+        }
+
         const main = document.querySelector('main');
         main.addEventListener('click', function(event) {
             if (event.target.tagName === 'SPAN') {
@@ -204,6 +223,7 @@
         });
 
         initStarsColor();
+        restoreVotesAndColors(); // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony
     </script>
 </body>
 </html>
