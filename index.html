@@ -1,3 +1,6 @@
+Oczywiście, tutaj jest zaktualizowany kod HTML zawierający zaimplementowany kod JavaScript:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,6 +104,26 @@
     </footer>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const players = document.querySelectorAll('.player');
+
+            players.forEach(player => {
+                const stars = player.querySelectorAll('.rating span');
+
+                stars.forEach((star, index) => {
+                    star.addEventListener('click', function() {
+                        const playerId = player.dataset.playerId;
+                        const clickedStarIndex = index;
+
+                        // Sprawdź, czy kliknięcie nastąpiło w gwiazdkach przypisanych do tego gracza
+                        if (index < 7 && this.parentElement.dataset.playerId === playerId) {
+                            voteForPlayer(playerId, stars, clickedStarIndex);
+                        }
+                    });
+                });
+            });
+        });
+
         function voteForPlayer(playerId, stars, clickedStarIndex) {
             const previousVote = localStorage.getItem('votedPlayer' + playerId);
             if (!previousVote || previousVote !== clickedStarIndex.toString()) {
@@ -118,33 +141,27 @@
             }
         }
 
-        const stars = document.querySelectorAll('.rating span');
-        stars.forEach((star, index) => {
-            star.addEventListener('click', function() {
-                voteForPlayer(this.parentElement.dataset.playerId, Array.from(stars), index);
-            });
-        });
-
         document.querySelector('.reset-button').addEventListener('click', function() {
             localStorage.clear();
+            const stars = document.querySelectorAll('.rating span');
             stars.forEach(star => {
                 star.style.color = 'gray';
             });
             console.log('Wszystkie oddane głosy zostały zresetowane.');
         });
-        
+
         function sortPlayersByAverageRating() {
             const players = document.querySelectorAll('.player');
-            
+
             const playersArray = Array.from(players);
-            
+
             playersArray.sort((a, b) => {
                 const starsA = Array.from(a.querySelectorAll('.rating span')).filter(star => star.style.color === 'gold').length;
                 const starsB = Array.from(b.querySelectorAll('.rating span')).filter(star => star.style.color === 'gold').length;
-                
+
                 return starsB - starsA;
             });
-            
+
             const main = document.querySelector('main');
             playersArray.forEach(player => {
                 main.appendChild(player);
