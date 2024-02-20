@@ -175,12 +175,28 @@
             stars.forEach((star, index) => {
                 const playerId = star.parentElement.parentElement.dataset.playerId;
                 const vote = localStorage.getItem('votedPlayer' + playerId);
+                if (vote !== null && index < parseInt(vote)) {
+                    star.style.color = 'gold';
+                }
+            });
+        }
+
+        // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony
+        function restoreVotesAndColors() {
+            const players = document.querySelectorAll('.player');
+            players.forEach(player => {
+                const playerId = player.dataset.playerId;
+                const vote = localStorage.getItem('votedPlayer' + playerId);
+                const stars = player.querySelectorAll('.rating span');
                 if (vote !== null) {
-                    if (index <= parseInt(vote)) {
-                        star.style.color = 'gold';
-                    } else {
-                        star.style.color = 'gray';
-                    }
+                    stars.forEach((star, index) => {
+                        if (index < parseInt(vote)) {
+                            star.style.color = 'gold';
+                        } else {
+                            star.style.color = 'gray';
+                        }
+                    });
+                    updateVoteCount(playerId);
                 }
             });
         }
@@ -207,6 +223,7 @@
         });
 
         initStarsColor();
+        restoreVotesAndColors(); // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony
     </script>
 </body>
 </html>
