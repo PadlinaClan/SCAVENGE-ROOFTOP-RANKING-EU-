@@ -123,14 +123,10 @@
     <script>
         function voteForPlayer(playerId, clickedStarIndex) {
             const previousVote = localStorage.getItem('votedPlayer' + playerId);
-            if (!previousVote || previousVote !== clickedStarIndex.toString()) {
-                const currentVote = localStorage.getItem('currentVote' + playerId);
-                if (currentVote !== null && currentVote !== clickedStarIndex.toString()) {
-                    const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
-                    localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
-                }
-                localStorage.setItem('currentVote' + playerId, clickedStarIndex.toString());
+            if (!previousVote) {
                 localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
+                const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
+                localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
 
                 const stars = document.querySelectorAll(`.player[data-player-id="${playerId}"] .rating span`);
                 stars.forEach((star, index) => {
@@ -144,7 +140,7 @@
                 updateVoteCount(playerId);
                 sortPlayersByAverageRating();
             } else {
-                console.log('Już oddano taki sam głos na tego gracza.');
+                console.log('Już oddano głos na tego gracza.');
             }
         }
 
