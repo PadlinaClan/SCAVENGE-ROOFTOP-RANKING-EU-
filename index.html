@@ -127,6 +127,9 @@
             const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
 
             if (previousVote !== clickedStarIndex.toString()) {
+                // Zapisanie wartości głosu
+                localStorage.setItem('voteValue' + playerId, clickedStarIndex.toString());
+
                 if (previousVote !== null) {
                     // Jeśli poprzedni głos już był oddany, zmień go
                     stars.forEach((star, index) => {
