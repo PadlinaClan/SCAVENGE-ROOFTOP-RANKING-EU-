@@ -125,6 +125,9 @@
             const previousVote = localStorage.getItem('votedPlayer' + playerId);
             if (!previousVote || previousVote !== clickedStarIndex.toString()) {
                 localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
+                const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
+                localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
+
                 for (let i = 0; i < stars.length; i++) {
                     if (i <= clickedStarIndex) {
                         stars[i].style.color = 'gold';
@@ -143,7 +146,7 @@
         function updateVoteCount(playerId) {
             const player = document.querySelector(`.player[data-player-id="${playerId}"]`);
             const voteCountElement = player.querySelector('.vote-count');
-            const votes = localStorage.getItem('votedPlayer' + playerId) ? parseInt(localStorage.getItem('votedPlayer' + playerId)) + 1 : 0;
+            const votes = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
             voteCountElement.textContent = `(${votes} vote${votes !== 1 ? 's' : ''})`;
         }
 
