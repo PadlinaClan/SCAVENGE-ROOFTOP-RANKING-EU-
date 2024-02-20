@@ -153,7 +153,6 @@
                 ratingElement.setAttribute('data-rating', clickedStarIndex);
 
                 console.log('Oddano głos na gracza o ID ' + playerId + ' (' + (clickedStarIndex + 1) + ' gwiazdki)');
-                console.log('Aktualna wartość atrybutu data-rating dla gracza ' + playerId + ': ' + ratingElement.getAttribute('data-rating'));
                 updateVoteCount(playerId);
                 sortPlayersByRating(); // Zmiana: sortowanie po ilości gwiazdek
             } else {
@@ -168,7 +167,6 @@
         }
 
         function sortPlayersByRating() {
-            console.log("Sortowanie graczy...");
             const players = document.querySelectorAll('.player');
             const sortedPlayers = Array.from(players).sort((a, b) => {
                 const ratingA = parseInt(a.querySelector('.rating').getAttribute('data-rating'));
