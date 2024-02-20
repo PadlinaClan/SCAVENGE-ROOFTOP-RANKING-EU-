@@ -20,8 +20,8 @@
 
         .player {
             display: flex;
-            justify-content: flex-start; /* Wyśrodkowanie elementów w poziomie */
-            align-items: center; /* Wyśrodkowanie elementów w pionie */
+            justify-content: center; /* Centrowanie elementów w poziomie */
+            align-items: center; /* Centrowanie elementów w pionie */
             padding: 20px 20px 10px;
             border-bottom: 1px solid gray;
         }
@@ -29,10 +29,6 @@
         .player span {
             margin: 0;
             padding-right: 20px;
-        }
-
-        .rating {
-            margin-left: auto; /* Ustawienie oceny po prawej stronie */
         }
 
         .rating span {
@@ -69,7 +65,7 @@
     </header>
 
     <main>
-        <!-- Poniżej znajduje się kod dla wszystkich graczy -->
+        <!-- Poniżej znajduje się kod dla wszystkich 95 graczy -->
         <!-- Pamiętaj, aby zwiększyć wartość data-player-id o 1 dla każdego nowego gracza -->
         <div class="player">
             <span>Sebastian Bach</span>
@@ -78,8 +74,36 @@
             </div>
         </div>
         
-        <!-- Tutaj dodaj kolejnych graczy analogicznie -->
+        <!-- Dodać kolejnych graczy analogicznie -->
+        <div class="player">
+            <span>Monsgeek</span>
+            <div class="rating" data-player-id="2">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+        </div>
 
+        <div class="player">
+            <span>Timnurleng</span>
+            <div class="rating" data-player-id="3">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+        </div>
+
+        <!-- Dodaj pozostałych graczy analogicznie -->
+        <div class="player">
+            <span>skankhunt42</span>
+            <div class="rating" data-player-id="4">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+        </div>
+
+        <!-- Tutaj dodać pozostałych graczy -->
+        <div class="player">
+            <span>[ y ]</span>
+            <div class="rating" data-player-id="5">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -95,18 +119,4 @@
                         stars[i].style.color = 'gold';
                     }
                 }
-                console.log('Oddano głos na gracza o ID ' + playerId);
-            } else {
-                console.log('Już oddano głos na tego gracza.');
-            }
-        }
-
-        const stars = document.querySelectorAll('.rating span');
-        stars.forEach((star, index) => {
-            star.addEventListener('click', function() {
-                voteForPlayer(this.parentElement.dataset.playerId, Array.from(stars));
-            });
-        });
-    </script>
-</body>
-</html>
+               
