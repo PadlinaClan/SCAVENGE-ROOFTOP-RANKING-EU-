@@ -120,7 +120,6 @@
                 console.log('Już oddano taki sam głos na tego gracza.');
             }
             sortPlayersByAverageRating();
-            addEventListenersToStars();
         }
 
         function updateVoteCount(playerId) {
@@ -143,23 +142,16 @@
             });
         }
 
-        function addEventListenersToStars() {
-            const players = document.querySelectorAll('.player');
-            players.forEach(player => {
-                const stars = player.querySelectorAll('.rating span');
-                stars.forEach((star, index) => {
-                    star.addEventListener('click', function() {
-                        const playerId = player.dataset.playerId;
-                        const clickedStarIndex = index;
-                        if (index < 7 && this.parentElement.dataset.playerId === playerId) {
-                            voteForPlayer(playerId, stars, clickedStarIndex);
-                        }
-                    });
-                });
+        const stars = document.querySelectorAll('.rating span');
+        stars.forEach((star, index) => {
+            star.addEventListener('click', function() {
+                const playerId = this.parentElement.parentElement.dataset.playerId;
+                const clickedStarIndex = index;
+                if (index < 7 && this.parentElement.dataset.playerId === playerId) {
+                    voteForPlayer(playerId, stars, clickedStarIndex);
+                }
             });
-        }
-
-        addEventListenersToStars();
+        });
 
         document.querySelector('.reset-button').addEventListener('click', function() {
             localStorage.clear();
