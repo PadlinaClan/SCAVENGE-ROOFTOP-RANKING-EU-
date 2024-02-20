@@ -97,7 +97,7 @@
         <div class="player" data-player-id="1">
             <span>Sebastian Bach</span>
             <div class="rating" data-rating="0">
-                <span onclick="voteForPlayer(1, this.parentElement.children, 0)">&#9733;</span><span onclick="voteForPlayer(1, this.parentElement.children, 1)">&#9733;</span><span onclick="voteForPlayer(1, this.parentElement.children, 2)">&#9733;</span><span onclick="voteForPlayer(1, this.parentElement.children, 3)">&#9733;</span><span onclick="voteForPlayer(1, this.parentElement.children, 4)">&#9733;</span><span onclick="voteForPlayer(1, this.parentElement.children, 5)">&#9733;</span><span onclick="voteForPlayer(1, this.parentElement.children, 6)">&#9733;</span>
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
@@ -106,7 +106,7 @@
         <div class="player" data-player-id="2">
             <span>John Doe</span>
             <div class="rating" data-rating="0">
-                <span onclick="voteForPlayer(2, this.parentElement.children, 0)">&#9733;</span><span onclick="voteForPlayer(2, this.parentElement.children, 1)">&#9733;</span><span onclick="voteForPlayer(2, this.parentElement.children, 2)">&#9733;</span><span onclick="voteForPlayer(2, this.parentElement.children, 3)">&#9733;</span><span onclick="voteForPlayer(2, this.parentElement.children, 4)">&#9733;</span><span onclick="voteForPlayer(2, this.parentElement.children, 5)">&#9733;</span><span onclick="voteForPlayer(2, this.parentElement.children, 6)">&#9733;</span>
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
@@ -121,20 +121,21 @@
     </footer>
 
     <script>
-        function voteForPlayer(playerId, stars, clickedStarIndex) {
+        function voteForPlayer(playerId, clickedStarIndex) {
             const previousVote = localStorage.getItem('votedPlayer' + playerId);
             if (!previousVote || previousVote !== clickedStarIndex.toString()) {
                 localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
                 const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
                 localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
 
-                for (let i = 0; i < stars.length; i++) {
-                    if (i <= clickedStarIndex) {
-                        stars[i].style.color = 'gold';
+                const stars = document.querySelectorAll(`.player[data-player-id="${playerId}"] .rating span`);
+                stars.forEach((star, index) => {
+                    if (index <= clickedStarIndex) {
+                        star.style.color = 'gold';
                     } else {
-                        stars[i].style.color = 'gray';
+                        star.style.color = 'gray';
                     }
-                }
+                });
                 console.log('Oddano głos na gracza o ID ' + playerId + ' (' + (clickedStarIndex + 1) + ' gwiazdki)');
                 updateVoteCount(playerId);
                 sortPlayersByAverageRating();
@@ -144,8 +145,7 @@
         }
 
         function updateVoteCount(playerId) {
-            const player = document.querySelector(`.player[data-player-id="${playerId}"]`);
-            const voteCountElement = player.querySelector('.vote-count');
+            const voteCountElement = document.querySelector(`.player[data-player-id="${playerId}"] .vote-count`);
             const votes = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
             voteCountElement.textContent = `(${votes} vote${votes !== 1 ? 's' : ''})`;
         }
@@ -184,16 +184,15 @@
             });
         }
 
-        const stars = document.querySelectorAll('.rating span');
-        stars.forEach((star, index) => {
-            star.addEventListener('click', function() {
-                const playerId = this.parentElement.parentElement.dataset.playerId;
-                const clickedStarIndex = index;
-                if (index < 7 && this.parentElement.dataset.playerId === playerId) {
-                    voteForPlayer(playerId, stars, clickedStarIndex);
-                    this.parentElement.setAttribute('data-rating', clickedStarIndex + 1);
+        const main = document.querySelector('main');
+        main.addEventListener('click', function(event) {
+            if (event.target.tagName === 'SPAN') {
+                const playerId = event.target.parentElement.parentElement.dataset.playerId;
+                const clickedStarIndex = Array.from(event.target.parentElement.children).indexOf(event.target);
+                if (clickedStarIndex >= 0 && clickedStarIndex < 7) {
+                    voteForPlayer(playerId, clickedStarIndex);
                 }
-            });
+            }
         });
 
         document.querySelector('.reset-button').addEventListener('click', function() {
