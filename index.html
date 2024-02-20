@@ -122,14 +122,14 @@
 
     <script>
         function voteForPlayer(playerId, clickedStarIndex) {
-            const previousVote = localStorage.getItem('votedPlayer' + playerId);
+            const previousVote = getCookie('votedPlayer' + playerId);
             const stars = document.querySelectorAll(`.player[data-player-id="${playerId}"] .rating span`);
-            const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
+            const voteCount = parseInt(getCookie('voteCount' + playerId)) || 0;
 
             if (previousVote !== clickedStarIndex.toString()) {
                 // Zapisanie wartości głosu
-                localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
-                localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
+                setCookie('votedPlayer' + playerId, clickedStarIndex.toString(), 365);
+                setCookie('voteCount' + playerId, (voteCount + 1).toString(), 365);
 
                 // Zmiana kolorów gwiazdek
                 stars.forEach((star, index) => {
@@ -154,7 +154,7 @@
 
         function updateVoteCount(playerId) {
             const voteCountElement = document.querySelector(`.player[data-player-id="${playerId}"] .vote-count`);
-            const votes = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
+            const votes = parseInt(getCookie('voteCount' + playerId)) || 0;
             voteCountElement.textContent = `(${votes} vote${votes !== 1 ? 's' : ''})`;
         }
 
@@ -175,7 +175,7 @@
             const stars = document.querySelectorAll('.rating span');
             stars.forEach((star, index) => {
                 const playerId = star.parentElement.parentElement.dataset.playerId;
-                const vote = localStorage.getItem('votedPlayer' + playerId);
+                const vote = getCookie('votedPlayer' + playerId);
                 if (vote !== null && index < parseInt(vote)) {
                     star.style.color = 'gold';
                 }
@@ -194,21 +194,35 @@
         });
 
         document.querySelector('.reset-button').addEventListener('click', function() {
-            localStorage.clear();
-            const stars = document.querySelectorAll('.rating span');
-            stars.forEach(star => {
-                star.style.color = 'gray';
+            const players = document.querySelectorAll('.player');
+            players.forEach(player => {
+                const playerId = player.dataset.playerId;
+                setCookie('votedPlayer' + playerId, '', 365);
+                setCookie('voteCount' + playerId, '', 365);
             });
-            const voteCountElements = document.querySelectorAll('.vote-count');
-            voteCountElements.forEach(voteCountElement => {
-                voteCountElement.textContent = '(0 votes)';
-            });
-            const playerRatings = document.querySelectorAll('.rating');
-            playerRatings.forEach(rating => {
-                rating.setAttribute('data-rating', '0');
-            });
-            console.log('Wszystkie oddane głosy zostały zresetowane.');
+            location.reload(); // Odświeżenie strony po zresetowaniu głosów
         });
+
+        // Funkcja do ustawiania ciasteczka
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        // Funkcja do pobierania ciasteczka
+        function getCookie(name) {
+            const decodedCookie = decodeURIComponent(document.cookie);
+            const cookies = decodedCookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
 
         initStarsColor();
     </script>
