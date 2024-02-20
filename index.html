@@ -96,11 +96,11 @@
     </footer>
 
     <script>
-        function voteForPlayer(playerId, stars) {
+        function voteForPlayer(playerId, stars, clickedStarIndex) {
             if (!localStorage.getItem('votedPlayer' + playerId)) {
                 localStorage.setItem('votedPlayer' + playerId, true);
                 stars.forEach((star, index) => {
-                    if (index <= stars.indexOf(this)) {
+                    if (index <= clickedStarIndex) {
                         star.style.color = 'gold';
                     }
                 });
@@ -113,7 +113,7 @@
         const stars = document.querySelectorAll('.rating span');
         stars.forEach((star, index) => {
             star.addEventListener('click', function() {
-                voteForPlayer(this.parentElement.dataset.playerId, Array.from(stars));
+                voteForPlayer(this.parentElement.dataset.playerId, Array.from(stars), index);
             });
         });
 
