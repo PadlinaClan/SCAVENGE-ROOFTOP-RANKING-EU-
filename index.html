@@ -96,7 +96,7 @@
     <main>
         <div class="player" data-player-id="1">
             <span>Sebastian Bach</span>
-            <div class="rating" data-rating="0">
+            <div class="rating" data-player-id="1" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
@@ -105,7 +105,7 @@
         <!-- Dodany nowy gracz -->
         <div class="player" data-player-id="2">
             <span>John Doe</span>
-            <div class="rating" data-rating="0">
+            <div class="rating" data-player-id="2" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
@@ -124,9 +124,13 @@
         function voteForPlayer(playerId, clickedStarIndex) {
             const previousVote = localStorage.getItem('votedPlayer' + playerId);
             if (!previousVote || previousVote !== clickedStarIndex.toString()) {
+                const currentVote = localStorage.getItem('currentVote' + playerId);
+                if (currentVote !== null && currentVote !== clickedStarIndex.toString()) {
+                    const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
+                    localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
+                }
+                localStorage.setItem('currentVote' + playerId, clickedStarIndex.toString());
                 localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
-                const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
-                localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
 
                 const stars = document.querySelectorAll(`.player[data-player-id="${playerId}"] .rating span`);
                 stars.forEach((star, index) => {
