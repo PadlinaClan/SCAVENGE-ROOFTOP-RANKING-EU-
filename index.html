@@ -153,14 +153,24 @@
         function sortPlayersByAverageRating() {
             const players = document.querySelectorAll('.player');
             const sortedPlayers = Array.from(players).sort((a, b) => {
-                const starsA = parseInt(a.querySelector('.rating').getAttribute('data-rating'));
-                const starsB = parseInt(b.querySelector('.rating').getAttribute('data-rating'));
+                const starsA = countSelectedStars(a.querySelector('.rating').children);
+                const starsB = countSelectedStars(b.querySelector('.rating').children);
                 return starsB - starsA;
             });
             const main = document.querySelector('main');
             sortedPlayers.forEach(player => {
                 main.appendChild(player);
             });
+        }
+
+        function countSelectedStars(stars) {
+            let count = 0;
+            stars.forEach(star => {
+                if (star.style.color === 'gold') {
+                    count++;
+                }
+            });
+            return count;
         }
 
         function initStarsColor() {
