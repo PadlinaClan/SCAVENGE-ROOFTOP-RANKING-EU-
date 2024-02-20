@@ -18,6 +18,46 @@
             padding: 50px 0 20px;
         }
 
+        .header-text {
+            animation: changeColor 10s infinite; /* Animacja trwa 10 sekund i powtarza się nieskończoność razy */
+        }
+
+        @keyframes changeColor {
+            0% {
+                color: red;
+            }
+            10% {
+                color: orange;
+            }
+            20% {
+                color: yellow;
+            }
+            30% {
+                color: green;
+            }
+            40% {
+                color: blue;
+            }
+            50% {
+                color: indigo; /* Możesz również użyć 'purple' zamiast 'indigo' */
+            }
+            60% {
+                color: violet; /* Możesz również użyć 'purple' zamiast 'violet' */
+            }
+            70% {
+                color: pink;
+            }
+            80% {
+                color: white;
+            }
+            90% {
+                color: cyan; /* Możesz również użyć 'lightblue' zamiast 'cyan' */
+            }
+            100% {
+                color: red;
+            }
+        }
+
         .player {
             display: flex;
             justify-content: center;
@@ -62,7 +102,7 @@
 </head>
 <body>
     <header>
-        <h1>SCAVENGE ROOFTOP RANKING EU</h1>
+        <h1 class="header-text">SCAVENGE ROOFTOP RANKING EU</h1>
         <div class="voting-suggestion">
             My voting suggestion:<br>
             7 stars - one of the best players<br>
