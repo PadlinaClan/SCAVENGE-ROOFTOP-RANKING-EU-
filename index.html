@@ -122,11 +122,42 @@
 
     <script>
         function voteForPlayer(playerId, clickedStarIndex) {
-            localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
+            const previousVote = localStorage.getItem('votedPlayer' + playerId);
             const stars = document.querySelectorAll(`.player[data-player-id="${playerId}"] .rating span`);
             const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
 
-            // reszta funkcji bez zmian
+            if (previousVote !== clickedStarIndex.toString()) {
+                if (previousVote !== null) {
+                    // Jeśli poprzedni głos już był oddany, zmień go
+                    stars.forEach((star, index) => {
+                        if (index <= previousVote) {
+                            star.style.color = 'gray';
+                        }
+                    });
+                }
+
+                localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
+                localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
+
+                // Zmiana kolorów gwiazdek
+                stars.forEach((star, index) => {
+                    if (index <= clickedStarIndex) {
+                        star.style.color = 'gold';
+                    } else {
+                        star.style.color = 'gray';
+                    }
+                });
+
+                // Aktualizacja atrybutu data-rating
+                const ratingElement = document.querySelector(`.player[data-player-id="${playerId}"] .rating`);
+                ratingElement.setAttribute('data-rating', clickedStarIndex);
+
+                console.log('Oddano głos na gracza o ID ' + playerId + ' (' + (clickedStarIndex + 1) + ' gwiazdki)');
+                updateVoteCount(playerId);
+                sortPlayersByRating(); // Zmiana: sortowanie po ilości gwiazdek
+            } else {
+                console.log('Już oddano taki sam głos na tego gracza.');
+            }
         }
 
         function updateVoteCount(playerId) {
@@ -136,7 +167,16 @@
         }
 
         function sortPlayersByRating() {
-            // reszta funkcji bez zmian
+            const players = document.querySelectorAll('.player');
+            const sortedPlayers = Array.from(players).sort((a, b) => {
+                const ratingA = parseInt(a.querySelector('.rating').getAttribute('data-rating'));
+                const ratingB = parseInt(b.querySelector('.rating').getAttribute('data-rating'));
+                return ratingB - ratingA;
+            });
+            const main = document.querySelector('main');
+            sortedPlayers.forEach(player => {
+                main.appendChild(player);
+            });
         }
 
         function initStarsColor() {
@@ -157,8 +197,6 @@
                 const clickedStarIndex = Array.from(event.target.parentElement.children).indexOf(event.target);
                 if (clickedStarIndex >= 0 && clickedStarIndex < 7) {
                     voteForPlayer(playerId, clickedStarIndex);
-                    updateVoteCount(playerId);
-                    sortPlayersByRating();
                 }
             }
         });
