@@ -76,17 +76,22 @@
     </header>
 
     <main>
-        
-        
         <div class="player">
             <span>Sebastian Bach</span>
             <div class="rating" data-player-id="1">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
         </div>
-        
-        <!-- Dodać kolejnych graczy analogicznie -->
-        <!-- Tutaj dodać pozostałych graczy -->
+
+        <!-- Dodany nowy gracz -->
+        <div class="player">
+            <span>,,[ y ]</span>
+            <div class="rating" data-player-id="2">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+        </div>
+
+        <!-- Reszta kodu -->
 
         <button class="reset-button">Reset Votes</button>
     </main>
@@ -97,16 +102,19 @@
 
     <script>
         function voteForPlayer(playerId, stars, clickedStarIndex) {
-            if (!localStorage.getItem('votedPlayer' + playerId)) {
-                localStorage.setItem('votedPlayer' + playerId, true);
+            const previousVote = localStorage.getItem('votedPlayer' + playerId);
+            if (!previousVote || previousVote !== clickedStarIndex.toString()) {
+                localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
                 stars.forEach((star, index) => {
                     if (index <= clickedStarIndex) {
                         star.style.color = 'gold';
+                    } else {
+                        star.style.color = 'gray';
                     }
                 });
-                console.log('Oddano głos na gracza o ID ' + playerId);
+                console.log('Oddano głos na gracza o ID ' + playerId + ' (' + (clickedStarIndex + 1) + ' gwiazdki)');
             } else {
-                console.log('Już oddano głos na tego gracza.');
+                console.log('Już oddano taki sam głos na tego gracza.');
             }
         }
 
@@ -124,6 +132,27 @@
             });
             console.log('Wszystkie oddane głosy zostały zresetowane.');
         });
+        
+        function sortPlayersByAverageRating() {
+            const players = document.querySelectorAll('.player');
+            
+            const playersArray = Array.from(players);
+            
+            playersArray.sort((a, b) => {
+                const starsA = Array.from(a.querySelectorAll('.rating span')).filter(star => star.style.color === 'gold').length;
+                const starsB = Array.from(b.querySelectorAll('.rating span')).filter(star => star.style.color === 'gold').length;
+                
+                return starsB - starsA;
+            });
+            
+            const main = document.querySelector('main');
+            playersArray.forEach(player => {
+                main.appendChild(player);
+            });
+        }
+
+        // Wywołanie funkcji sortowania przy starcie strony
+        sortPlayersByAverageRating();
     </script>
 </body>
 </html>
