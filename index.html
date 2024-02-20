@@ -124,16 +124,19 @@
         function voteForPlayer(playerId, clickedStarIndex) {
             const previousVote = localStorage.getItem('votedPlayer' + playerId);
             const stars = document.querySelectorAll(`.player[data-player-id="${playerId}"] .rating span`);
-            if (previousVote !== null) {
-                // Jeśli poprzedni głos już był oddany, anuluj go
-                stars.forEach((star, index) => {
-                    star.style.color = index <= previousVote ? 'gold' : 'gray';
-                });
-            }
+            const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
 
             if (previousVote !== clickedStarIndex.toString()) {
+                if (previousVote !== null) {
+                    // Jeśli poprzedni głos już był oddany, zmień go
+                    stars.forEach((star, index) => {
+                        if (index <= previousVote) {
+                            star.style.color = 'gray';
+                        }
+                    });
+                }
+
                 localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
-                const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
                 localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
 
                 // Zmiana kolorów gwiazdek
@@ -144,9 +147,10 @@
                         star.style.color = 'gray';
                     }
                 });
+
                 console.log('Oddano głos na gracza o ID ' + playerId + ' (' + (clickedStarIndex + 1) + ' gwiazdki)');
                 updateVoteCount(playerId);
-                sortPlayersByAverageRating();
+                sortPlayersByRating(); // Zmiana: sortowanie po ilości gwiazdek
             } else {
                 console.log('Już oddano taki sam głos na tego gracza.');
             }
@@ -158,27 +162,17 @@
             voteCountElement.textContent = `(${votes} vote${votes !== 1 ? 's' : ''})`;
         }
 
-        function sortPlayersByAverageRating() {
+        function sortPlayersByRating() {
             const players = document.querySelectorAll('.player');
             const sortedPlayers = Array.from(players).sort((a, b) => {
-                const starsA = countSelectedStars(a.querySelector('.rating').children);
-                const starsB = countSelectedStars(b.querySelector('.rating').children);
-                return starsB - starsA;
+                const ratingA = parseInt(a.querySelector('.rating').getAttribute('data-rating'));
+                const ratingB = parseInt(b.querySelector('.rating').getAttribute('data-rating'));
+                return ratingB - ratingA;
             });
             const main = document.querySelector('main');
             sortedPlayers.forEach(player => {
                 main.appendChild(player);
             });
-        }
-
-        function countSelectedStars(stars) {
-            let count = 0;
-            stars.forEach(star => {
-                if (star.style.color === 'gold') {
-                    count++;
-                }
-            });
-            return count;
         }
 
         function initStarsColor() {
