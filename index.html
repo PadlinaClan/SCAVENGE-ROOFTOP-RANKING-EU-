@@ -94,18 +94,18 @@
     </header>
 
     <main>
-        <div class="player" data-player-id="1">
+        <div class="player">
             <span>Sebastian Bach</span>
-            <div class="rating" data-player-id="1" data-rating="0">
+            <div class="rating" data-player-name="Sebastian Bach" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
 
         <!-- Dodany nowy gracz -->
-        <div class="player" data-player-id="2">
+        <div class="player">
             <span>John Doe</span>
-            <div class="rating" data-player-id="2" data-rating="0">
+            <div class="rating" data-player-name="John Doe" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
@@ -121,26 +121,15 @@
     </footer>
 
     <script>
-        function voteForPlayer(playerId, clickedStarIndex) {
-            const previousVote = localStorage.getItem('votedPlayer' + playerId);
-            const stars = document.querySelectorAll(`.player[data-player-id="${playerId}"] .rating span`);
-            const voteCount = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
+        function voteForPlayer(playerName, clickedStarIndex) {
+            const previousVote = localStorage.getItem('votedPlayer' + playerName);
+            const stars = document.querySelectorAll(`.player[data-player-name="${playerName}"] .rating span`);
+            const voteCount = parseInt(localStorage.getItem('voteCount' + playerName)) || 0;
 
             if (previousVote !== clickedStarIndex.toString()) {
                 // Zapisanie wartości głosu
-                localStorage.setItem('voteValue' + playerId, clickedStarIndex.toString());
-
-                if (previousVote !== null) {
-                    // Jeśli poprzedni głos już był oddany, zmień go
-                    stars.forEach((star, index) => {
-                        if (index <= previousVote) {
-                            star.style.color = 'gray';
-                        }
-                    });
-                }
-
-                localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
-                localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
+                localStorage.setItem('votedPlayer' + playerName, clickedStarIndex.toString());
+                localStorage.setItem('voteCount' + playerName, (voteCount + 1).toString());
 
                 // Zmiana kolorów gwiazdek
                 stars.forEach((star, index) => {
@@ -152,20 +141,20 @@
                 });
 
                 // Aktualizacja atrybutu data-rating
-                const ratingElement = document.querySelector(`.player[data-player-id="${playerId}"] .rating`);
+                const ratingElement = document.querySelector(`.player[data-player-name="${playerName}"] .rating`);
                 ratingElement.setAttribute('data-rating', clickedStarIndex);
 
-                console.log('Oddano głos na gracza o ID ' + playerId + ' (' + (clickedStarIndex + 1) + ' gwiazdki)');
-                updateVoteCount(playerId);
+                console.log('Oddano głos na gracza ' + playerName + ' (' + (clickedStarIndex + 1) + ' gwiazdki)');
+                updateVoteCount(playerName);
                 sortPlayersByRating(); // Zmiana: sortowanie po ilości gwiazdek
             } else {
                 console.log('Już oddano taki sam głos na tego gracza.');
             }
         }
 
-        function updateVoteCount(playerId) {
-            const voteCountElement = document.querySelector(`.player[data-player-id="${playerId}"] .vote-count`);
-            const votes = parseInt(localStorage.getItem('voteCount' + playerId)) || 0;
+        function updateVoteCount(playerName) {
+            const voteCountElement = document.querySelector(`.player[data-player-name="${playerName}"] .vote-count`);
+            const votes = parseInt(localStorage.getItem('voteCount' + playerName)) || 0;
             voteCountElement.textContent = `(${votes} vote${votes !== 1 ? 's' : ''})`;
         }
 
@@ -185,8 +174,8 @@
         function initStarsColor() {
             const stars = document.querySelectorAll('.rating span');
             stars.forEach((star, index) => {
-                const playerId = star.parentElement.parentElement.dataset.playerId;
-                const vote = localStorage.getItem('votedPlayer' + playerId);
+                const playerName = star.parentElement.parentElement.querySelector('span').textContent;
+                const vote = localStorage.getItem('votedPlayer' + playerName);
                 if (vote !== null && index < parseInt(vote)) {
                     star.style.color = 'gold';
                 }
@@ -196,10 +185,10 @@
         const main = document.querySelector('main');
         main.addEventListener('click', function(event) {
             if (event.target.tagName === 'SPAN') {
-                const playerId = event.target.parentElement.parentElement.dataset.playerId;
+                const playerName = event.target.parentElement.querySelector('span').textContent;
                 const clickedStarIndex = Array.from(event.target.parentElement.children).indexOf(event.target);
                 if (clickedStarIndex >= 0 && clickedStarIndex < 7) {
-                    voteForPlayer(playerId, clickedStarIndex);
+                    voteForPlayer(playerName, clickedStarIndex);
                 }
             }
         });
