@@ -201,6 +201,26 @@
             });
         }
 
+        // Poprawka: przywracanie liczby gwiazdek po odświeżeniu strony
+        function restoreStarCounts() {
+            const players = document.querySelectorAll('.player');
+            players.forEach(player => {
+                const playerId = player.dataset.playerId;
+                const vote = localStorage.getItem('votedPlayer' + playerId);
+                const stars = player.querySelectorAll('.rating span');
+                if (vote !== null) {
+                    stars.forEach((star, index) => {
+                        if (index < parseInt(vote)) {
+                            star.style.color = 'gold';
+                        } else {
+                            star.style.color = 'gray';
+                        }
+                    });
+                    updateVoteCount(playerId);
+                }
+            });
+        }
+
         const main = document.querySelector('main');
         main.addEventListener('click', function(event) {
             if (event.target.tagName === 'SPAN') {
@@ -224,6 +244,7 @@
 
         initStarsColor();
         restoreVotesAndColors(); // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony
+        restoreStarCounts(); // Poprawka: przywracanie liczby gwiazdek po odświeżeniu strony
     </script>
 </body>
 </html>
