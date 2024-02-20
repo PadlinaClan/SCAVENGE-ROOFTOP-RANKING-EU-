@@ -148,7 +148,12 @@
                     }
                 });
 
+                // Aktualizacja atrybutu data-rating
+                const ratingElement = document.querySelector(`.player[data-player-id="${playerId}"] .rating`);
+                ratingElement.setAttribute('data-rating', clickedStarIndex);
+
                 console.log('Oddano głos na gracza o ID ' + playerId + ' (' + (clickedStarIndex + 1) + ' gwiazdki)');
+                console.log('Aktualna wartość atrybutu data-rating dla gracza ' + playerId + ': ' + ratingElement.getAttribute('data-rating'));
                 updateVoteCount(playerId);
                 sortPlayersByRating(); // Zmiana: sortowanie po ilości gwiazdek
             } else {
