@@ -125,19 +125,19 @@
             const previousVote = localStorage.getItem('votedPlayer' + playerId);
             if (!previousVote || previousVote !== clickedStarIndex.toString()) {
                 localStorage.setItem('votedPlayer' + playerId, clickedStarIndex.toString());
-                stars.forEach((star, index) => {
-                    if (index <= clickedStarIndex) {
-                        star.style.color = 'gold';
+                for (let i = 0; i < stars.length; i++) {
+                    if (i <= clickedStarIndex) {
+                        stars[i].style.color = 'gold';
                     } else {
-                        star.style.color = 'gray';
+                        stars[i].style.color = 'gray';
                     }
-                });
+                }
                 console.log('Oddano głos na gracza o ID ' + playerId + ' (' + (clickedStarIndex + 1) + ' gwiazdki)');
                 updateVoteCount(playerId);
+                sortPlayersByAverageRating();
             } else {
                 console.log('Już oddano taki sam głos na tego gracza.');
             }
-            sortPlayersByAverageRating();
         }
 
         function updateVoteCount(playerId) {
@@ -157,6 +157,17 @@
             const main = document.querySelector('main');
             sortedPlayers.forEach(player => {
                 main.appendChild(player);
+            });
+        }
+
+        function initStarsColor() {
+            const stars = document.querySelectorAll('.rating span');
+            stars.forEach((star, index) => {
+                const playerId = star.parentElement.parentElement.dataset.playerId;
+                const vote = localStorage.getItem('votedPlayer' + playerId);
+                if (vote !== null && index < parseInt(vote)) {
+                    star.style.color = 'gold';
+                }
             });
         }
 
@@ -188,6 +199,8 @@
             });
             console.log('Wszystkie oddane głosy zostały zresetowane.');
         });
+
+        initStarsColor();
     </script>
 </body>
 </html>
