@@ -157,6 +157,36 @@
             voteCountElement.textContent = `(${votes} vote${votes !== 1 ? 's' : ''})`;
         }
 
+        // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony oraz sortowanie graczy po ilości gwiazdek
+        function restoreVotesAndColors() {
+            const players = document.querySelectorAll('.player');
+            const sortedPlayers = Array.from(players).sort((a, b) => {
+                const ratingA = parseInt(a.querySelector('.rating').getAttribute('data-rating'));
+                const ratingB = parseInt(b.querySelector('.rating').getAttribute('data-rating'));
+                return ratingB - ratingA;
+            });
+            const main = document.querySelector('main');
+            sortedPlayers.forEach(player => {
+                main.appendChild(player);
+            });
+
+            sortedPlayers.forEach(player => {
+                const playerId = player.dataset.playerId;
+                const vote = localStorage.getItem('votedPlayer' + playerId);
+                const stars = player.querySelectorAll('.rating span');
+                if (vote !== null) {
+                    stars.forEach((star, index) => {
+                        if (index < parseInt(vote)) {
+                            star.style.color = 'gold';
+                        } else {
+                            star.style.color = 'gray';
+                        }
+                    });
+                    updateVoteCount(playerId);
+                }
+            });
+        }
+
         function sortPlayersByRating() {
             const players = document.querySelectorAll('.player');
             const sortedPlayers = Array.from(players).sort((a, b) => {
@@ -177,46 +207,6 @@
                 const vote = localStorage.getItem('votedPlayer' + playerId);
                 if (vote !== null && index < parseInt(vote)) {
                     star.style.color = 'gold';
-                }
-            });
-        }
-
-        // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony
-        function restoreVotesAndColors() {
-            const players = document.querySelectorAll('.player');
-            players.forEach(player => {
-                const playerId = player.dataset.playerId;
-                const vote = localStorage.getItem('votedPlayer' + playerId);
-                const stars = player.querySelectorAll('.rating span');
-                if (vote !== null) {
-                    stars.forEach((star, index) => {
-                        if (index < parseInt(vote)) {
-                            star.style.color = 'gold';
-                        } else {
-                            star.style.color = 'gray';
-                        }
-                    });
-                    updateVoteCount(playerId);
-                }
-            });
-        }
-
-        // Poprawka: przywracanie liczby gwiazdek po odświeżeniu strony
-        function restoreStarCounts() {
-            const players = document.querySelectorAll('.player');
-            players.forEach(player => {
-                const playerId = player.dataset.playerId;
-                const vote = localStorage.getItem('votedPlayer' + playerId);
-                const stars = player.querySelectorAll('.rating span');
-                if (vote !== null) {
-                    stars.forEach((star, index) => {
-                        if (index < parseInt(vote)) {
-                            star.style.color = 'gold';
-                        } else {
-                            star.style.color = 'gray';
-                        }
-                    });
-                    updateVoteCount(playerId);
                 }
             });
         }
@@ -244,7 +234,6 @@
 
         initStarsColor();
         restoreVotesAndColors(); // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony
-        restoreStarCounts(); // Poprawka: przywracanie liczby gwiazdek po odświeżeniu strony
     </script>
 </body>
 </html>
