@@ -181,7 +181,7 @@
 
         function sortPlayersByRating() {
             const playersContainer = document.querySelector('main');
-            const players = [...playersContainer.querySelectorAll('.player')];
+            const players = Array.from(playersContainer.querySelectorAll('.player'));
 
             players.sort((a, b) => {
                 const ratingA = parseInt(a.querySelector('.rating').getAttribute('data-rating'));
