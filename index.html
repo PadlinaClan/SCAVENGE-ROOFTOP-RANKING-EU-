@@ -177,6 +177,9 @@
                             star.style.color = 'gray';
                         }
                     });
+                    // Aktualizacja atrybutu data-rating
+                    const ratingElement = document.querySelector(`.player[data-player-id="${playerId}"] .rating`);
+                    ratingElement.setAttribute('data-rating', vote); // Aktualizacja atrybutu data-rating
                     updateVoteCount(playerId);
                 }
             });
