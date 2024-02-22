@@ -39,27 +39,34 @@
         .player {
             display: flex;
             align-items: center;
-            padding: 20px 20px 10px;
+            padding: 20px 0;
             border-bottom: 1px solid gray;
         }
 
         .player-number {
             margin-right: 10px;
-        }
-
-        .player span {
-            margin: 0;
-            padding-right: 20px;
+            width: 20px; /* Szerokość numeru gracza */
+            flex-shrink: 0; /* Zapobieganie pomniejszaniu numeru gracza */
         }
 
         .player-name {
             flex-grow: 1;
-            text-align: center; /* Nowe */
+            text-align: left; /* Zarówno dla długich, jak i krótkich nazw */
+        }
+
+        .stars-container {
+            width: 38%; /* 100% - 62% = 38% */
+            margin-left: 62%; /* Margines na 62% szerokości strony */
+            display: flex;
+            justify-content: flex-end; /* Ustawienie gwiazdek na końcu kontenera */
+            align-items: center; /* Wyrównanie gwiazdek do środka */
+            margin-right: 20px; /* Margines po prawej stronie gwiazdek */
         }
 
         .rating {
-            margin-left: auto; /* Nowe */
-            margin-right: 50px; /* Nowe */
+            width: auto; /* Automatyczna szerokość gwiazdek */
+            display: flex;
+            flex-direction: row-reverse; /* Odwrócenie kolejności gwiazdek */
         }
 
         .rating span {
@@ -88,19 +95,6 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-        }
-
-        /* Nowy kod CSS */
-        .stars-container {
-            width: 38%; /* 100% - 62% = 38% */
-            margin-left: 62%; /* Margines na 62% szerokości strony */
-            display: flex;
-        }
-
-        .rating {
-            /* margin-left: auto; */ /* Usunięcie tej linii */
-            margin-right: 50px;
-            width: 100%; /* Ustawienie szerokości gwiazdek na 100% kontenera */
         }
     </style>
 </head>
