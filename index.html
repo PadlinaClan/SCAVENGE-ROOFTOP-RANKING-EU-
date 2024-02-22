@@ -180,16 +180,16 @@
         }
 
         function sortPlayersByRating() {
-            const players = document.querySelectorAll('.player');
-            const sortedPlayers = Array.from(players).sort((a, b) => {
+            const playersContainer = document.querySelector('main');
+            const players = [...playersContainer.querySelectorAll('.player')];
+
+            players.sort((a, b) => {
                 const ratingA = parseInt(a.querySelector('.rating').getAttribute('data-rating'));
                 const ratingB = parseInt(b.querySelector('.rating').getAttribute('data-rating'));
                 return ratingB - ratingA;
             });
-            const main = document.querySelector('main');
-            sortedPlayers.forEach(player => {
-                main.appendChild(player);
-            });
+
+            players.forEach(player => playersContainer.appendChild(player));
         }
 
         function initStarsColor() {
