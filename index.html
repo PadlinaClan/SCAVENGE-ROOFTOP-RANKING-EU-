@@ -47,19 +47,16 @@
             margin-right: 10px;
         }
 
-        .player span {
-            margin: 0;
-            padding-right: 20px;
+        .player-info {
+            flex-grow: 1;
         }
 
         .player-name {
-            flex-grow: 1;
-            text-align: center; /* Nowe */
+            text-align: center;
         }
 
         .rating {
-            margin-left: auto; /* Nowe */
-            margin-right: 50px; /* Nowe */
+            margin-right: 25px;
         }
 
         .rating span {
@@ -110,9 +107,11 @@
     <main>
         <div class="player" data-player-id="1">
             <span class="player-number">1.</span>
-            <span class="player-name">Sebastian Bach</span> <!-- Zmieniono kolejność -->
-            <div class="rating" data-player-id="1" data-rating="0">
-                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            <div class="player-info">
+                <span class="player-name">Sebastian Bach</span>
+                <div class="rating" data-player-id="1" data-rating="0">
+                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                </div>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
@@ -120,9 +119,11 @@
         <!-- Dodany nowy gracz -->
         <div class="player" data-player-id="2">
             <span class="player-number">2.</span>
-            <span class="player-name">[ y ]</span> <!-- Zmieniono kolejność -->
-            <div class="rating" data-player-id="2" data-rating="0">
-                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            <div class="player-info">
+                <span class="player-name">[ y ]</span>
+                <div class="rating" data-player-id="2" data-rating="0">
+                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                </div>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
