@@ -96,6 +96,7 @@
 
     <main>
         <div class="player" data-player-id="1">
+            <span class="player-number">1.</span>
             <span>Sebastian Bach</span>
             <div class="rating" data-player-id="1" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
@@ -105,6 +106,7 @@
 
         <!-- Dodany nowy gracz -->
         <div class="player" data-player-id="2">
+            <span class="player-number">2.</span>
             <span>[ y ]</span>
             <div class="rating" data-player-id="2" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
@@ -189,7 +191,10 @@
                 return ratingB - ratingA;
             });
 
-            players.forEach(player => playersContainer.appendChild(player));
+            players.forEach((player, index) => {
+                player.querySelector('.player-number').textContent = `${index + 1}.`;
+                playersContainer.appendChild(player);
+            });
         }
 
         function initStarsColor() {
