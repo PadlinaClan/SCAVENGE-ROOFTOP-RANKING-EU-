@@ -54,12 +54,12 @@
 
         .player-name {
             flex-grow: 1;
-            text-align: center; /* Nowe */
+            text-align: center; 
         }
 
         .rating {
-            margin-left: auto; /* Nowe */
-            margin-right: 50px; /* Nowe */
+            margin-left: auto; 
+            margin-right: 50px; 
         }
 
         .rating span {
@@ -99,8 +99,8 @@
             <br>
             7 stars - best <br>
             6 stars - pro <br>
-            5 stars - very good player<br>
-            4 stars - good player<br>
+            5 stars - good player<br>
+            4 stars - fine player<br>
             3 stars - average player<br>
             2 stars - kinda useful <br>
             1 star - noob
@@ -110,14 +110,14 @@
     <main>
         <div class="player" data-player-id="1">
             <span class="player-number">1.</span>
-            <span class="player-name">Sebastian Bach</span> <!-- Zmieniono kolejność -->
+            <span class="player-name">Sebastian Bach</span> 
             <div class="rating" data-player-id="1" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
 
-        <!-- Dodany nowy gracz -->
+        
         <div class="player" data-player-id="2">
             <span class="player-number">2.</span>
             <span class="player-name">[ y ]</span> <!-- Zmieniono kolejność -->
@@ -127,6 +127,15 @@
             <span class="vote-count">(0 votes)</span>
         </div>
 
+<div class="player" data-player-id="3">
+            <span class="player-number">3.</span>
+            <span class="player-name">sokoniaruu</span> 
+            <div class="rating" data-player-id="3" data-rating="0">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+            </div>
+            <span class="vote-count">(0 votes)</span>
+        </div>
+        
         <button class="reset-button">Reset Votes</button>
     </main>
 
@@ -150,7 +159,7 @@
                     localStorage.setItem('voteCount' + playerId, (voteCount + 1).toString());
                 }
 
-                // Zmiana kolorów gwiazdek
+                
                 stars.forEach((star, index) => {
                     if (index <= clickedStarIndex) {
                         star.style.color = 'gold';
@@ -159,7 +168,7 @@
                     }
                 });
 
-                // Aktualizacja atrybutu data-rating
+                
                 const ratingElement = document.querySelector(`.player[data-player-id="${playerId}"] .rating`);
                 ratingElement.setAttribute('data-rating', clickedStarIndex);
 
@@ -177,7 +186,7 @@
             voteCountElement.textContent = `(${votes} vote${votes !== 1 ? 's' : ''})`;
         }
 
-        // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony oraz sortowanie graczy po ilości gwiazdek
+       
         function restoreVotesAndColors() {
             const players = document.querySelectorAll('.player');
             players.forEach(player => {
@@ -199,7 +208,7 @@
                 }
             });
 
-            sortPlayersByRating(); // Zmiana: sortowanie po ilości gwiazdek
+            sortPlayersByRating(); 
         }
 
         function sortPlayersByRating() {
@@ -246,11 +255,11 @@
                 localStorage.removeItem('votedPlayer' + playerId);
                 localStorage.removeItem('voteCount' + playerId);
             });
-            location.reload(); // Odświeżenie strony po zresetowaniu głosów
+            location.reload(); 
         });
 
         initStarsColor();
-        restoreVotesAndColors(); // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony
+        restoreVotesAndColors(); 
     </script>
 </body>
 </html>
