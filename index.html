@@ -181,7 +181,7 @@
                 const stars = player.querySelectorAll('.rating span');
                 if (vote !== null) {
                     stars.forEach((star, index) => {
-                        if (index < parseInt(vote)) {
+                        if (index <= parseInt(vote)) { // Zmieniono warunek na mniejsze lub równe
                             star.style.color = 'gold';
                         } else {
                             star.style.color = 'gray';
@@ -217,7 +217,7 @@
             stars.forEach((star, index) => {
                 const playerId = star.parentElement.parentElement.dataset.playerId;
                 const vote = localStorage.getItem('votedPlayer' + playerId);
-                if (vote !== null && index < parseInt(vote)) {
+                if (vote !== null && index <= parseInt(vote)) { // Zmieniono warunek na mniejsze lub równe
                     star.style.color = 'gold';
                 }
             });
