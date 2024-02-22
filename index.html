@@ -47,16 +47,19 @@
             margin-right: 10px;
         }
 
-        .player-info {
-            flex-grow: 1;
+        .player span {
+            margin: 0;
+            padding-right: 20px;
         }
 
         .player-name {
-            text-align: center;
+            flex-grow: 1;
+            text-align: center; /* Nowe */
         }
 
         .rating {
-            margin-right: 25px;
+            margin-left: auto; /* Nowe */
+            margin-right: 50px; /* Nowe */
         }
 
         .rating span {
@@ -107,11 +110,9 @@
     <main>
         <div class="player" data-player-id="1">
             <span class="player-number">1.</span>
-            <div class="player-info">
-                <span class="player-name">Sebastian Bach</span>
-                <div class="rating" data-player-id="1" data-rating="0">
-                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
-                </div>
+            <span class="player-name">Sebastian Bach</span> <!-- Zmieniono kolejność -->
+            <div class="rating" data-player-id="1" data-rating="0">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
@@ -119,11 +120,9 @@
         <!-- Dodany nowy gracz -->
         <div class="player" data-player-id="2">
             <span class="player-number">2.</span>
-            <div class="player-info">
-                <span class="player-name">[ y ]</span>
-                <div class="rating" data-player-id="2" data-rating="0">
-                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
-                </div>
+            <span class="player-name">[ y ]</span> <!-- Zmieniono kolejność -->
+            <div class="rating" data-player-id="2" data-rating="0">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
@@ -248,7 +247,6 @@
         initStarsColor();
         restoreVotesAndColors(); // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony
     </script>
-</body>
     <script>
     function voteForPlayer(playerId, clickedStarIndex) {
         const previousVote = localStorage.getItem('votedPlayer' + playerId);
@@ -363,4 +361,5 @@
     restoreVotesAndColors(); // Przywracanie głosów i kolorów gwiazdek po odświeżeniu strony
 </script>
 
+</body>
 </html>
