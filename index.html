@@ -52,6 +52,16 @@
             padding-right: 20px;
         }
 
+        .player-name {
+            flex-grow: 1;
+            text-align: center; /* Nowe */
+        }
+
+        .rating {
+            margin-left: auto; /* Nowe */
+            margin-right: 50px; /* Nowe */
+        }
+
         .rating span {
             cursor: pointer;
             color: gray;
@@ -100,7 +110,7 @@
     <main>
         <div class="player" data-player-id="1">
             <span class="player-number">1.</span>
-            <span>Sebastian Bach</span>
+            <span class="player-name">Sebastian Bach</span> <!-- Zmieniono kolejność -->
             <div class="rating" data-player-id="1" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
@@ -110,7 +120,7 @@
         <!-- Dodany nowy gracz -->
         <div class="player" data-player-id="2">
             <span class="player-number">2.</span>
-            <span>[ y ]</span>
+            <span class="player-name">[ y ]</span> <!-- Zmieniono kolejność -->
             <div class="rating" data-player-id="2" data-rating="0">
                 <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
