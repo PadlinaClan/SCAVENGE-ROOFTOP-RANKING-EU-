@@ -89,19 +89,6 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
-        /* Nowy kod CSS */
-        .stars-container {
-            width: 38%; /* 100% - 62% = 38% */
-            margin-left: 62%; /* Margines na 62% szerokości strony */
-            display: flex;
-        }
-
-        .rating {
-            /* margin-left: auto; */ /* Usunięcie tej linii */
-            margin-right: 50px;
-            width: 100%; /* Ustawienie szerokości gwiazdek na 100% kontenera */
-        }
     </style>
 </head>
 <body>
@@ -124,10 +111,8 @@
         <div class="player" data-player-id="1">
             <span class="player-number">1.</span>
             <span class="player-name">Sebastian Bach</span> <!-- Zmieniono kolejność -->
-            <div class="stars-container">
-                <div class="rating" data-player-id="1" data-rating="0">
-                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
-                </div>
+            <div class="rating" data-player-id="1" data-rating="0">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
@@ -136,10 +121,8 @@
         <div class="player" data-player-id="2">
             <span class="player-number">2.</span>
             <span class="player-name">[ y ]</span> <!-- Zmieniono kolejność -->
-            <div class="stars-container">
-                <div class="rating" data-player-id="2" data-rating="0">
-                    <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
-                </div>
+            <div class="rating" data-player-id="2" data-rating="0">
+                <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
             </div>
             <span class="vote-count">(0 votes)</span>
         </div>
